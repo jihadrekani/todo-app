@@ -1,27 +1,42 @@
-import react from 'react'
-import ReactDOM from 'react-dom/client';
-import {BrowserRouter , Route} from 'react-router-dom'
-import Home from './components/Home'
-import Project from './components/Project';
+import React, { Component } from 'react';
+import TodoItems from './components/todoItems/TodoItem'
+import AddItem from './components/AddItem/AddItem'
 
-import Nav from './components/Nav';
+class App extends Component {
+  state = {
+    items : [
+      {id:1,name:'Jihad',age:27},
+      {id:2,name:'Birhat',age:23},
+      {id:3,name:'Ayad',age:15},
+    ]
+  }
 
-import './App.css';
-import PageTitle from './components/PageTitle';
-import ContactList from './components/ContactList';
+deleteItem = (id) => {
+    let items = this.state.items.filter(item =>{
+      return item.id !== id
+    })
+    this.setState({items})
+  }
 
-function App() {
-  return (
-   <div>
-    <PageTitle title='favorit contacts' />
-    <ContactList />
-    <Project />
+  addItem = (item) => {
+    item.id = Math.random();
+    let items = this.state.items;
+    items.push(item);
+    this.setState({items})
 
-       </div>
-  )
+  }
+
+  render(){
+    return (
+      <div  className='App container'>
+        <h1 className='text-center'>Todo List</h1>
+        
+        <TodoItems items={this.state.items} deleteItem={this.deleteItem} />
+        <AddItem addItem={this.addItem}/>
+      </div>
+    )
+  }
 }
-
-
 
 
 
